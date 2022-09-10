@@ -1,0 +1,45 @@
+.table-vk-matches {
+    table-layout: fixed;
+    width: content-box;
+    border-collapse: collapse;
+    border: 3px solid #345050;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.table-vk-matches > thead th:nth-child(1) {
+    width: 30%;
+}
+
+.table-vk-matches > thead th:nth-child(2) {
+    width: 20%;
+}
+
+.table-vk-matches > thead th:nth-child(3) {
+    width: 15%;
+}
+
+.table-vk-matches > thead th:nth-child(4) {
+    width: 30%;
+}
+
+.table-vk-matches > th, td {
+    padding: 20px;
+}
+
+.table-vk-matches tbody {
+    text-align: center;
+}
+
+.table-vk-matches tbody td {
+    border: 1px solid #345050;
+}
+
+.table-vk-matches button {
+    padding: 5px;
+    margin: 3px;
+}
+
+.selected-tr {
+    background-color: rgba(236, 153, 18, 0.83);
+}

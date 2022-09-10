@@ -9,7 +9,21 @@ export type TContext = {
     age: string;
   };
   profilesFound?: TProfile[];
-  isLoading?: boolean;
+  loader: {
+    isLoading?: boolean;
+    loaderMessage?: string;
+  };
+  popUps: {
+    showError?: boolean;
+    showMessage?: boolean;
+    delayMs: number;
+  };
+  selectorsData: {
+    city: string;
+    month: string;
+    day: string;
+    year: string;
+  };
 };
 
 export const defaultContext: TContext = {
@@ -18,6 +32,20 @@ export const defaultContext: TContext = {
     offset: '',
     quantity: '',
     age: '',
+  },
+  popUps: {
+    showError: false,
+    showMessage: false,
+    delayMs: 3000,
+  },
+  loader: {
+    isLoading: false,
+  },
+  selectorsData: {
+    city: '0',
+    month: '0',
+    day: '0',
+    year: '0',
   },
 };
 

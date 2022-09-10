@@ -1,4 +1,3 @@
-import { TProfileExt } from '../components/vk-api/vk-lib/vk-models';
 import { getMockedProfilesData } from '../components/vk-api/forms/test-data/mocked-data';
 
 const API_CONSTANTS = {

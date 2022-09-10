@@ -1,0 +1,35 @@
+.popup-error-container {
+    opacity: 0.8;
+    background-color: brown;
+    width: 450px;
+    height: 80px;
+    padding: 10px;
+    position: fixed;
+    display: inline-block;
+    vertical-align: top;
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    margin: 10px;
+    border-radius: 25px;
+    transition: opacity 2s ease-out;
+}
+
+.popup-message-container {
+    opacity: 0.8;
+    background-color: rgb(29, 28, 28);
+    width: 450px;
+    height: 80px;
+    padding: 10px;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    bottom: 50%;
+    left: 50%;
+    margin: 10px;
+    display: inline-block;
+    border-radius: 25px;
+    transition: opacity 2s ease-out;
+    color: #61dafb;
+}

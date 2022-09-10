@@ -55,12 +55,52 @@ export function useSearchPanelInputs() {
     });
   };
 
+  const handleOnChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.id === 'city') {
+      updateStateContext({
+        ...context,
+        selectorsData: {
+          ...context.selectorsData,
+          city: event.target.value,
+        },
+      });
+    }
+    if (event.target.id === 'year') {
+      updateStateContext({
+        ...context,
+        selectorsData: {
+          ...context.selectorsData,
+          year: event.target.value,
+        },
+      });
+    }
+    if (event.target.id === 'month') {
+      updateStateContext({
+        ...context,
+        selectorsData: {
+          ...context.selectorsData,
+          month: event.target.value,
+        },
+      });
+    }
+    if (event.target.id === 'day') {
+      updateStateContext({
+        ...context,
+        selectorsData: {
+          ...context.selectorsData,
+          day: event.target.value,
+        },
+      });
+    }
+  };
+
   return {
     getRefsValues,
     handleChangeName,
     handleChangeOffset,
     handleChangeQnt,
     handleChangeAge,
+    handleOnChangeSelect,
   };
 }
 
@@ -68,19 +108,21 @@ export function useSearchPanelActions() {
   const context = useVkApiContext();
   const { updateStateContext } = useApplicationContext();
 
-  const handleClickLoader = () => {
+  const showLoader = () => {
     updateStateContext({
       ...context,
-      isLoading: !context.isLoading,
+      loader: {
+        isLoading: true,
+      },
     });
   };
 
-  const getProfiles = () => {
+  const getMockedProfiles = () => {
     updateStateContext({
       ...context,
       profilesFound: getMockedProfilesData(),
     });
   };
 
-  return { handleClickLoader, getProfiles };
+  return { showLoader, getMockedProfiles };
 }

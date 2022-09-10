@@ -1,0 +1,5 @@
+.selectors-sector {
+    position: relative;
+    display: grid;
+    width: 300px;
+}
