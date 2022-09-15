@@ -1,0 +1,74 @@
+.profile-check-container {
+    display: table;
+    text-align: center;
+    width: 700px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 25px;
+    padding-top: 35px;
+    height: 500px;
+    margin-left: 15px;
+    margin-top: 230px;
+    background-color: #4a9898;
+    position: absolute;
+}
+
+.profile-check-container-vk {
+    display: table;
+    text-align: center;
+    width: 700px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 25px;
+    padding-top: 35px;
+    height: 500px;
+    margin: 15px;
+    background-color: #4a9898;
+    position: absolute;
+    left: 1000px;
+    top: 50px;
+}
+
+.props-block {
+    margin-top: 85px;
+    padding: 25px;
+    position: relative;
+}
+
+.property-field {
+    text-align: left;
+    padding: 5px;
+    background-color: #84abab;
+    display: flex;
+    height: 50px;
+    border: 1px solid;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+
+.value-div {
+    margin: 10px;
+    left: 20%;
+    position: relative;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #4d0a94;
+}
+
+.value-div-date {
+    margin: 10px;
+    left: 20%;
+    position: relative;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #4d0a94;
+}
+
+.foto-profile > img {
+    margin-bottom: 10px;
+    width: 350px;
+    height: 370px;
+    position: relative;
+}

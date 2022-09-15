@@ -13,14 +13,14 @@ export const Seleсtors = () => {
   const cities = Object.keys(CITY_OPTION_VALUES).map(
     (city) => {
       return (
-         <option value={CITY_OPTION_VALUES[city].value}>{CITY_OPTION_VALUES[city].description}</option>
+         <option key={city} value={CITY_OPTION_VALUES[city].value}>{CITY_OPTION_VALUES[city].description}</option>
       );
     },
   );
   const months = Object.keys(MONTHS).map(
     (number) => {
       return (
-         <option value={number}>{MONTHS[number]}</option>
+         <option key={number} value={number}>{MONTHS[number]}</option>
       );
     },
   );
@@ -28,7 +28,7 @@ export const Seleсtors = () => {
   const days = DAYS.map(
     (day) => {
       return (
-         <option value={day}>{ day === '0' ? NULL_VALUE_DESCRIPRION[day] : day}</option>
+         <option key={day} value={day}>{ day === '0' ? NULL_VALUE_DESCRIPRION[day] : day}</option>
       );
     },
   );
@@ -36,7 +36,7 @@ export const Seleсtors = () => {
   const years = YEARS.map(
     (year) => {
       return (
-          <option value={year}>{ year === '0' ? NULL_VALUE_DESCRIPRION[year] : year}</option>
+          <option key={year} value={year}>{ year === '0' ? NULL_VALUE_DESCRIPRION[year] : year}</option>
       );
     },
   );

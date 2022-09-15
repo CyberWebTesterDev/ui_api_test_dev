@@ -1,0 +1,63 @@
+.select-rating-correlation {
+    width: 50px;
+    height: 20px;
+    font-size: 15px;
+    margin: 15px;
+    padding: 5px;
+}
+
+.select-rating-est {
+    margin: 15px;
+}
+
+.select-rating-correlation option {
+    margin: 5px;
+}
+
+.control-panel-db {
+    font-size: 20px;
+    position: relative;
+    margin-left: 15px;
+    top: 20px;
+}
+
+.db-buttons-block {
+    display: grid;
+}
+
+.db-buttons-block > button {
+    width: 200px;
+    padding: 5px;
+    margin-top: 15px;
+}
+
+.selections-container {
+    padding: 2px;
+    margin: 2px;
+}
+
+.select-rating-est {
+    padding: 3px;
+}
+
+.data-table {
+    top: 20px;
+    display: grid;
+    position: relative;
+}
+
+.label-span-field {
+    font-weight: bold;
+}
+
+.data-span {
+    font-weight: bold;
+    margin-left: 10px;
+    color: #0fbce1;
+    font-size: 25px;
+}
+
+.no-data-span {
+    font-size: 25px;
+    color: #8b8b9a;
+}

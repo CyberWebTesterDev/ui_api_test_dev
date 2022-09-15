@@ -1,31 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { defaultContext, VkApiContext } from './vk-api-context';
 import { SearchPanel } from './forms/search-panel/search-panel';
 import { VkProfilesTable } from './forms/vk-profiles-table';
-import { Loader } from '../loader/loader';
-import { ApplicationContext } from '../application-container/app-context';
-import { PopUpContainer } from '../pop-ups/pop-up-container';
+import { useVkApiContext } from './vk-api-context';
 
 export const VkApiContainer = () => {
-  const [state, setStateContext] = React.useState(defaultContext);
+  const { profilesFound, profilesIntersections } = useVkApiContext();
 
-  // React.useEffect(
-  //   () => {
-  //     console.log('VkApiContainer context changed', {
-  //       context: state,
-  //     });
-  //   }, [state],
-  // );
-
+  React.useEffect(() => {
+    console.log('VkApiContainer context change', {
+      profilesFound,
+      profilesIntersections,
+    });
+  }, [profilesFound, profilesIntersections],
+  );
   return (
-     <ApplicationContext.Provider value={{ updateStateContext: setStateContext }}>
-       <VkApiContext.Provider value={{ ...state }}>
-         <Loader/>
-         <PopUpContainer/>
-         <SearchPanel/>
-         <VkProfilesTable/>
-       </VkApiContext.Provider>
-     </ApplicationContext.Provider>
-
+     <>
+       <SearchPanel/>
+       <VkProfilesTable profilesFound={profilesFound}/>
+     </>
   );
 };

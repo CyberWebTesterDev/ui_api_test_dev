@@ -1,52 +1,88 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { TProfile, VK_NAMES_BY_KEY_MAP } from '../vk-lib/vk-models';
+import { VK_NAMES_BY_KEY_MAP, TProfileVK, TProfileCheckDB } from '../vk-lib/vk-models';
 import './table.css';
 import { useVkApiContext } from '../vk-api-context';
+import { countNonNullElementsInArray } from '../utils/vk-data-utild';
+import { Intersection } from './intersection';
 
-export const VkProfilesTable = () => {
+type TVkProfilesTable = {
+  profilesFound: (TProfileVK | null)[] | undefined;
+}
+
+export const VkProfilesTable = ({
+  profilesFound,
+}: TVkProfilesTable) => {
   const [selectedTdId, setSelectedTdId] = React.useState('');
-  const { profilesFound } = useVkApiContext();
 
-  const handleSelectedTd = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const event = e.target as HTMLButtonElement;
-    setSelectedTdId(event.value);
+  const handleSelectedTd = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const event = e.target as HTMLAnchorElement;
+    setSelectedTdId(event.id);
   };
 
   if (profilesFound?.length === 0 || !profilesFound) {
     return null;
   }
   const tableHead = Object.keys(VK_NAMES_BY_KEY_MAP).map(
-    (key) => {
+    (key, idx) => {
       return (
-         <th>{key}</th>
+         <th key={key + '_' + idx}>{key}</th>
       );
     },
   );
+  tableHead.push(<th key={'th_checked'}>Уже проверен?</th>);
   const tableBody = profilesFound.map(
-    (profile) => {
-      return (
+    (profile, idx) => {
+
+      return profile && (
          <tr
-            id={`${profile.id}`}
-            className={selectedTdId === profile.id.toString() ? 'selected-tr' : ''}
+            key={`tr-${idx}-${profile.id}`}
+            id={`${profile?.id}`}
+            className={selectedTdId === profile?.id.toString() ? 'selected-tr' : ''}
          >
-           <td>
-             {profile.id}
-             <button value={`${profile.id}`} onClick={(e) => handleSelectedTd(e)}>Посмотреть в вк</button>
-             <button value={`${profile.id}`} onClick={(e) => handleSelectedTd(e)}>Работать с профайлом</button>
+           <td key={`td-${idx}-${profile.id}`}>
+             {profile?.id}
+             <a
+                key={`a-${idx}-${profile.id}`}
+                href={`https://vk.com/id${profile.id}`}
+                target={'_blank'}
+                className={'id-link'}
+                type={'button'}
+                id={`${profile?.id}`}
+                onClick={(e) => handleSelectedTd(e)}
+             >
+               Посмотреть в вк
+             </a>
+             <a
+                key={`a-${idx + 1}-${profile.id}`}
+                href={`http://192.168.1.236:3000/profile-check/${profile.id}`}
+                target={'_blank'}
+                className={'id-link'}
+                type={'button'}
+                id={`${profile?.id}`}
+                onClick={(e) => handleSelectedTd(e)}
+             >
+               Работать с профайлом
+             </a>
            </td>
-           <td>{profile.first_name}</td>
-           <td>{profile.last_name}</td>
-           <td>{profile.sex}</td>
-           <td>{profile.bdate}</td>
+           <td key={`td-${idx + 2}-${profile.id}`}>{profile?.first_name}</td>
+           <td key={`td-${idx + 3}-${profile.id}`}>{profile?.last_name}</td>
+           <td key={`td-${idx + 4}-${profile.id}`}>{profile?.bdate}</td>
+           <Intersection profile={profile} />
          </tr>
       );
     },
   );
+  const countMatches = countNonNullElementsInArray(profilesFound);
+  const hasMatches = countMatches > 0;
+
   return (
      <table className={'table-vk-matches'}>
-       <caption>Результаты поиска</caption>
+       <caption style={{ marginBottom: '10px' }}>
+         {hasMatches ? 'Найдено ' + countMatches + ' подходящих' : 'Подходящих не' + ' найдено' }
+       </caption>
        <thead>
-         <tr>
+         <tr key={'table-head-row'}>
           {tableHead}
          </tr>
        </thead>

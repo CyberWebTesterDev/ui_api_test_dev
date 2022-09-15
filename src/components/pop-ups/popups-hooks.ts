@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { useApplicationContext } from '../application-container/app-context';
-import { useVkApiContext } from '../vk-api/vk-api-context';
+import { useServiceContext } from '../../service-api/service-context';
 
 export function usePopups () {
-  const context = useVkApiContext();
-  const { updateStateContext } = useApplicationContext();
-  const { popUps } = context;
+  const context = useServiceContext();
+  const { popUps, updateServiceStateContext } = context;
 
-  const setShowMessagePopUp = () => {
-    updateStateContext({
+  const setShowMessagePopUp = (message = '') => {
+    updateServiceStateContext({
       ...context,
       popUps: {
         ...popUps,
         showMessage: true,
+        textMessage: message,
       },
     });
     setTimeout(() => {
-      updateStateContext({
+      updateServiceStateContext({
         ...context,
         popUps: {
           ...popUps,
@@ -26,16 +26,17 @@ export function usePopups () {
     }, popUps.delayMs);
   };
 
-  const setShowErrorPopUp = () => {
-    updateStateContext({
+  const setShowErrorPopUp = (message = '') => {
+    updateServiceStateContext({
       ...context,
       popUps: {
         ...popUps,
         showError: true,
+        textMessage: message,
       },
     });
     setTimeout(() => {
-      updateStateContext({
+      updateServiceStateContext({
         ...context,
         popUps: {
           ...popUps,

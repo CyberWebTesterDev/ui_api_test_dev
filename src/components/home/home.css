@@ -1,0 +1,9 @@
+.menu-block {
+    display: grid;
+    margin-left: 15px;
+    margin-top: 15px;
+    padding: 5px;
+}
+.menu-block > a {
+    padding: 5px;
+}

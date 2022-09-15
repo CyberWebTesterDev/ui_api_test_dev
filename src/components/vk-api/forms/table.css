@@ -43,3 +43,18 @@
 .selected-tr {
     background-color: rgba(236, 153, 18, 0.83);
 }
+
+.id-link {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.true-td {
+    color: #0fbce1;
+    font-weight: bold;
+}
+
+.false-td {
+    color: #be0f0f;
+    font-weight: bold;
+}

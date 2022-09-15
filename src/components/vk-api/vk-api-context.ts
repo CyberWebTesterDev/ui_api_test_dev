@@ -1,28 +1,26 @@
 import * as React from 'react';
-import { TProfile } from './vk-lib/vk-models';
+import { TProfileVK, TProfileDBExtended, TProfileCheckDB } from './vk-lib/vk-models';
 
 export type TContext = {
   inputsData: {
     name: string;
     offset: string;
     quantity: string;
-    age: string;
+    ageFrom: string;
+    ageTo: string;
   };
-  profilesFound?: TProfile[];
-  loader: {
-    isLoading?: boolean;
-    loaderMessage?: string;
-  };
-  popUps: {
-    showError?: boolean;
-    showMessage?: boolean;
-    delayMs: number;
-  };
+  profilesFound?: (TProfileVK | null)[];
+  profilesIntersections?: (TProfileCheckDB | undefined)[];
   selectorsData: {
     city: string;
     month: string;
     day: string;
     year: string;
+  };
+  profileCheckForm: {
+    profileInDb: TProfileDBExtended | null;
+    profileVKData: TProfileVK | null;
+    idSearchParameter?: string;
   };
 };
 
@@ -31,21 +29,18 @@ export const defaultContext: TContext = {
     name: '',
     offset: '',
     quantity: '',
-    age: '',
-  },
-  popUps: {
-    showError: false,
-    showMessage: false,
-    delayMs: 3000,
-  },
-  loader: {
-    isLoading: false,
+    ageFrom: '',
+    ageTo: '',
   },
   selectorsData: {
     city: '0',
     month: '0',
     day: '0',
-    year: '0',
+    year: '',
+  },
+  profileCheckForm: {
+    profileInDb: null,
+    profileVKData: null,
   },
 };
 

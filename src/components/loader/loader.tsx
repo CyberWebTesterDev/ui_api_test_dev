@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './loader.css';
-import { useVkApiContext } from '../vk-api/vk-api-context';
+import { useServiceContext } from '../../service-api/service-context';
 
 export const Loader = () => {
-  const { loader: { isLoading } } = useVkApiContext();
+  const { loader: { isLoading } } = useServiceContext();
 
   return isLoading ? (
      <div className="b-popup">

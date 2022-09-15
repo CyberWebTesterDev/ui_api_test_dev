@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { useVkApiContext } from '../vk-api/vk-api-context';
-import { POPUP_CLASS_NAMES } from './popup-contants';
+import { POPUP_CLASS_NAMES, POPUP_MESSAGES } from './popup-contants';
 import './popups.css';
+import { useServiceContext } from '../../service-api/service-context';
 
 export const PopUpContainer = () => {
-  const { popUps: { showMessage, showError } } = useVkApiContext();
+  const { popUps: { showMessage, showError, textMessage } } = useServiceContext();
+  const popupText = textMessage ? textMessage : POPUP_MESSAGES.DEFAULT_MESSAGE;
 
   return (
      <>
        {showMessage && (
           <div className={POPUP_CLASS_NAMES.message}>
-            <span>Всплывающее окно сообщения</span>
+            <span>{popupText}</span>
           </div>
        )}
        {showError && (
-          <div className={POPUP_CLASS_NAMES.message}>
-            <span>Всплывающее окно ошибки</span>
+          <div className={POPUP_CLASS_NAMES.error}>
+            <span>{popupText}</span>
           </div>
        )}
      </>
