@@ -5,20 +5,26 @@ import { useVkApiContext } from '../vk-api-context';
 
 type TIntersection = {
   profile: TProfileVK | null;
+  handleIntersectionId: (id: string) => void;
 }
 
-export const Intersection = ({ profile }: TIntersection) => {
+export const Intersection = ({ profile, handleIntersectionId }: TIntersection) => {
   const { profilesIntersections } = useVkApiContext();
   const [isIntersected, setIsIntersected] = React.useState<boolean | undefined>(undefined);
-  const intersection = profilesIntersections?.find(int => int?.vk_id === profile?.id.toString());
-  const hasIntersection = intersection && intersection.vk_id === profile?.id.toString();
-  React.useEffect(() => setIsIntersected(hasIntersection), []);
-  React.useEffect(() => setIsIntersected(hasIntersection), [profilesIntersections]);
+  React.useEffect(
+    () => {
+      if (profilesIntersections) {
+        const intersection = profilesIntersections?.find(int => int?.vk_id === profile?.id.toString());
+        const hasIntersection = intersection && intersection.vk_id === profile?.id.toString();
+        setIsIntersected(hasIntersection);
+        const id = isIntersected ? profile?.id.toString() : '';
+      }
+    },
+    [profilesIntersections],
+  );
 
   console.log('Intersection', {
     profileId: profile?.id,
-    intersection,
-    hasIntersection,
     isIntersected,
     profilesIntersections,
   });

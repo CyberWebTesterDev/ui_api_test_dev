@@ -4,7 +4,6 @@ import { useDbConnect } from './options/use-db-connect';
 
 export const DbConnectApi = () => {
   const { profileCheckForm: { profileInDb } } = useVkApiContext();
-  const { handleInsertUpdateDB } = useDbConnect();
   const hasProfileInDb = !!profileInDb;
   const hasProfileInCheckTable = Boolean(hasProfileInDb && profileInDb?.first_checked);
   const text = hasProfileInCheckTable ? 'Перезаписать' : 'Записать';
@@ -44,7 +43,6 @@ export const DbConnectApi = () => {
 
   return (
      <div className={'db-buttons-block'}>
-       {!hasProfileInDb && (<button onClick={() => handleInsertUpdateDB()}>{text} в БД </button>)}
        {hasProfileInDb && !profileInDb?.first_checked && (<button>Записать в БД проверок </button>)}
        <div className={'data-table'}>
          {profileInDb?.estimation && <span className={'label-span-field'}>Профайл оценён на

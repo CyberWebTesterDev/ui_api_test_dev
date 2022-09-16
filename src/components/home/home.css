@@ -1,9 +1,18 @@
 .menu-block {
-    display: grid;
+    display: flex;
     margin-left: 15px;
-    margin-top: 15px;
+    margin-top: 2px;
     padding: 5px;
+    border-style: solid;
+    background-color: #71f1f1;
+    position: absolute;
+    left: 100rem;
 }
 .menu-block > a {
     padding: 5px;
+    border-style: solid;
+    margin-left: 10px;
+    background-color: #9d81bb;
+    color: #ece4dc;
+    border-color: #2a2abe;
 }

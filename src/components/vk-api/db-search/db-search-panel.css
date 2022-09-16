@@ -1,0 +1,13 @@
+.db-search-form {
+    width: 500px;
+    height: fit-content;
+    border: #508181;
+    border-style: solid;
+    display: grid;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+}

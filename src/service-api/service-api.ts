@@ -1,12 +1,13 @@
 import { getMockedProfilesData } from '../components/vk-api/forms/test-data/mocked-data';
 import { formatDate, getParsedJsonArray } from './service-utils';
 import {
+  TComment,
   TInsertUpdateDBProfile,
   TProfileCheckDB,
   TProfileDB,
   TProfileDBExtended,
   TProfileVK,
-  TServerUpdateCommand,
+  TServerUpdateCommand, TServerUpdateCommandE,
   TServerUpdateCommandSuccess,
   TServerUpdateReturnCode,
   TServerUpdateReturnCodePromise,
@@ -27,6 +28,12 @@ const API_CONSTANTS = {
   ENRICH_PROFILE_DB: 'insertupdprofile/',
   INSERT_UPD_SINGLE_PROFILE: 'insertchecksingle/',
   GET_MATCHES: 'matchfromsearch/',
+  GET_POST_VK_ID: 'getpostvkid/',
+  UPDATE_COMMENT_VK_ID: 'insertupdatepostvkid',
+  UPDATE_CHILD: 'upd/haschild/',
+  UPDATE_RELATIONSHIP: 'upd/isinrelationship/',
+  UPDATE_FAVORITE: 'updfavor/',
+  UPDATE_RELATION: 'updrelated/',
 };
 
 export function useApiVKService () {
@@ -135,6 +142,21 @@ export function useApiVKService () {
     }
   };
 
+  const getCommentByProfileId = async (profileId: string) => {
+    const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.GET_POST_VK_ID}${profileId}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('getCommentByProfileId VK received data');
+      console.log(data);
+      const parsedData = getParsedJsonArray(data) as TComment[];
+      formatDate(parsedData);
+      return parsedData[0];
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const getProfileDBInfoById = async (profileId: string) => {
     const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.SEARCH_IN_DB_ID}${profileId}`;
     try {
@@ -150,7 +172,7 @@ export function useApiVKService () {
     }
   };
 
-  const getProfileDBExtendedInfoById = async (profileId: string) => {
+  const getProfileDBExtendedInfoById = async (profileId: string): Promise<TProfileDBExtended> => {
     const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.SEARCH_IN_DB_EXT}${profileId}`;
     try {
       const response = await fetch(url);
@@ -159,7 +181,7 @@ export function useApiVKService () {
       console.log(getParsedJsonArray(data));
       const parsedData = getParsedJsonArray(data) as TProfileDBExtended[];
       formatDate(parsedData);
-      return parsedData;
+      return parsedData[0];
     } catch (e) {
       throw e;
     }
@@ -192,6 +214,116 @@ export function useApiVKService () {
       }
     } catch (e) {
       throw e;
+    }
+  };
+
+  const insertUpdatePostByVkId = async (comment: Pick<TComment, 'id' | 'text'>): Promise<TServerUpdateCommandE> => {
+    console.log('insertUpdatePostByVkId', {
+      comment,
+    });
+    const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.UPDATE_COMMENT_VK_ID}`;
+    const request = {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(comment),
+    };
+    try {
+      const response = await fetch(url, request);
+      if (response.ok) {
+        const data: TServerUpdateCommand = await response.json();
+        console.log('insertUpdatePostByVkId: Received data from server');
+        console.log(data);
+        return {
+          ...data,
+          isSuccess: data.rowCount > 0,
+        };
+      } else {
+        throw Error(`HTTP error: ${response.status}`);
+      }
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const updateHasChild = async (bool: string, profileId: string): Promise<TServerUpdateCommandE> => {
+    if (profileId && bool) {
+      const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.UPDATE_CHILD}${bool}/${profileId}`;
+      try {
+        const result = await fetch(url);
+        const response: TServerUpdateCommand = await result.json();
+        console.log('updateHasChild: received result for has_child update');
+        console.log(response);
+        return {
+          ...response,
+          isSuccess: response.rowCount > 0,
+        };
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      throw Error('updateHasChild: bool or profileId is not valid');
+    }
+  };
+
+  const updateRelationship = async (bool: string, profileId: string): Promise<TServerUpdateCommandE> => {
+    if (profileId && bool) {
+      const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.UPDATE_RELATIONSHIP}${bool}/${profileId}`;
+      try {
+        const result = await fetch(url);
+        const response: TServerUpdateCommand = await result.json();
+        console.log('updateRelationship: received result for has_child update');
+        console.log(response);
+        return {
+          ...response,
+          isSuccess: response.rowCount > 0,
+        };
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      throw Error('updateRelationship: bool or profileId is not valid');
+    }
+  };
+
+  const updateIsFavorite = async (bool: string, profileId: string): Promise<TServerUpdateReturnCodePromise> => {
+    if (profileId && bool) {
+      const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.UPDATE_FAVORITE}${bool}/${profileId}`;
+      try {
+        const result = await fetch(url);
+        const response: TServerUpdateReturnCode = await result.json();
+        console.log('updateIsFavorite: received result for has_child update');
+        console.log(response);
+        return {
+          ...response,
+          isSuccess: response.returnCode === 'SUCCESS',
+        };
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      throw Error('updateIsFavorite: bool or profileId is not valid');
+    }
+  };
+
+  const updateRelation = async (bool: string, profileId: string): Promise<TServerUpdateReturnCodePromise> => {
+    if (profileId && bool) {
+      const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.UPDATE_RELATION}${bool}/${profileId}`;
+      try {
+        const result = await fetch(url);
+        const response: TServerUpdateReturnCode = await result.json();
+        console.log('updateRelation: received result for update');
+        console.log(response);
+        return {
+          ...response,
+          isSuccess: response.returnCode === 'SUCCESS',
+        };
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      throw Error('updateRelation: bool or profileId is not valid');
     }
   };
 
@@ -310,6 +442,12 @@ export function useApiVKService () {
     getMatchedProfilesVKByQuery,
     getProfileInfoInDbChecksByIds,
     waitTimeout,
+    getCommentByProfileId,
+    insertUpdatePostByVkId,
+    updateHasChild,
+    updateIsFavorite,
+    updateRelation,
+    updateRelationship,
   };
 
 }

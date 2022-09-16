@@ -1,0 +1,18 @@
+.comment-vk {
+    display: grid;
+    position: relative;
+    margin-top: 50px;
+}
+
+.comment-text {
+    width: 500px;
+    height: 200px;
+    font-size: 20px;
+}
+.comment-text-disabled {
+    width: 500px;
+    font-size: 20px;
+    height: 200px;
+    pointer-events: none;
+    background-color: #c0c0c4;
+}

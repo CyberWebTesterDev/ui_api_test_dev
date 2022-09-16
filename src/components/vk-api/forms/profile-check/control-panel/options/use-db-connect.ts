@@ -15,7 +15,12 @@ export function useDbConnect () {
   const [currentEstimation, setCurrentEstimation] = React.useState<string>('');
   const [currentCorrEstimation, setCurrentCorrEstimation] = React.useState<string>('');
   const [birthYear, setBirthYear] = React.useState<string>('');
+  const [hasChild, setHasChild] = React.useState<string | undefined>('');
+  const [isInRelationShip, setIsInRelationShip] = React.useState<string | undefined>('');
+  const [isRelated, setIsRelated] = React.useState<string | undefined>('');
+  const [isFavorite, setIsFavorite] = React.useState<string | undefined>('');
   const [profileDB, setProfileDB] = React.useState<TProfileDBExtended | null>(null);
+  const [profileId, setProfileId] = React.useState<string | undefined>('');
   const {
     estimateProfileById,
     getProfileDBExtendedInfoById,
@@ -23,9 +28,12 @@ export function useDbConnect () {
     updateBirthYear,
     enrichProfileInDb,
     insertUpdateCheckSingleProfile,
+    updateHasChild,
+    updateRelationship,
+    updateRelation,
+    updateIsFavorite,
   } = useApiVKService();
   const { setShowMessagePopUp, setShowErrorPopUp } = usePopups();
-  const profileId = idSearchParameter ?? '';
 
   const handleChangeCurrentEstimation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentEstimation(e.target.value);
@@ -37,6 +45,26 @@ export function useDbConnect () {
 
   const handleChangeBirthYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setBirthYear(e.target.value);
+  };
+
+  const handleChangeHasChild = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setHasChild(e.target.value);
+  };
+
+  const handleChangeIsInRelationShip = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsInRelationShip(e.target.value);
+  };
+
+  const handleChangeIsRelated = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsRelated(e.target.value);
+  };
+
+  const handleAddFavorite = () => {
+    setIsFavorite('true');
+  };
+
+  const handleDeleteFavorite = () => {
+    setIsFavorite('false');
   };
 
   const handleInsertUpdateDB = async () => {
@@ -64,25 +92,37 @@ export function useDbConnect () {
   };
 
   const synchronizeUIData = async () => {
-    const [profile] = await getProfileDBExtendedInfoById(profileId);
-    setProfileDB(profile);
+    if (idSearchParameter) {
+      const profile = await getProfileDBExtendedInfoById(idSearchParameter);
+      setProfileDB(profile);
+    }
   };
 
   React.useEffect(
     () => {
-      updateStateContext({
-        ...context,
-        profileCheckForm: {
-          ...context.profileCheckForm,
-          profileInDb: profileDB,
-        },
-      });
+      if (idSearchParameter) {
+        setProfileId(idSearchParameter);
+      }
+    }, [idSearchParameter],
+  );
+
+  React.useEffect(
+    () => {
+      if (profileId) {
+        updateStateContext({
+          ...context,
+          profileCheckForm: {
+            ...context.profileCheckForm,
+            profileInDb: profileDB,
+          },
+        });
+      }
     }, [profileDB],
   );
 
   React.useEffect(
     () => {
-      if (currentEstimation) {
+      if (currentEstimation && profileId) {
         estimateProfileById(currentEstimation, profileId)
           .then(
             data => {
@@ -104,7 +144,7 @@ export function useDbConnect () {
 
   React.useEffect(
     () => {
-      if (currentCorrEstimation) {
+      if (currentCorrEstimation && profileId) {
         corrEstimateProfileById(currentCorrEstimation, profileId)
           .then(
             data => {
@@ -126,7 +166,7 @@ export function useDbConnect () {
 
   React.useEffect(
     () => {
-      if (birthYear) {
+      if (birthYear && profileId) {
         updateBirthYear(birthYear, profileId)
           .then(
             data => {
@@ -146,6 +186,94 @@ export function useDbConnect () {
     }, [birthYear],
   );
 
+  React.useEffect(
+    () => {
+      if (hasChild && profileId) {
+        updateHasChild(hasChild, profileId)
+          .then(
+            data => {
+              console.log('useDbConnect response from server: ', {
+                data,
+              });
+              if (data.isSuccess) {
+                synchronizeUIData().catch();
+                setShowMessagePopUp(POPUP_MESSAGES.SUCCESS_UPDATE);
+              } else {
+                setShowErrorPopUp(POPUP_MESSAGES.ERROR_UPDATE);
+              }
+            },
+          )
+          .catch();
+      }
+    }, [hasChild],
+  );
+
+  React.useEffect(
+    () => {
+      if (isRelated && profileId) {
+        updateRelation(isRelated, profileId)
+          .then(
+            data => {
+              console.log('useDbConnect response from server: ', {
+                data,
+              });
+              if (data.isSuccess) {
+                synchronizeUIData().catch();
+                setShowMessagePopUp(POPUP_MESSAGES.SUCCESS_UPDATE);
+              } else {
+                setShowErrorPopUp(POPUP_MESSAGES.ERROR_UPDATE);
+              }
+            },
+          )
+          .catch();
+      }
+    }, [isRelated],
+  );
+
+  React.useEffect(
+    () => {
+      if (isInRelationShip && profileId) {
+        updateRelationship(isInRelationShip, profileId)
+          .then(
+            data => {
+              console.log('useDbConnect response from server: ', {
+                data,
+              });
+              if (data.isSuccess) {
+                synchronizeUIData().catch();
+                setShowMessagePopUp(POPUP_MESSAGES.SUCCESS_UPDATE);
+              } else {
+                setShowErrorPopUp(POPUP_MESSAGES.ERROR_UPDATE);
+              }
+            },
+          )
+          .catch();
+      }
+    }, [isInRelationShip],
+  );
+
+  React.useEffect(
+    () => {
+      if (isFavorite && profileId) {
+        updateIsFavorite(isFavorite, profileId)
+          .then(
+            data => {
+              console.log('useDbConnect response from server: ', {
+                data,
+              });
+              if (data.isSuccess) {
+                synchronizeUIData().catch();
+                setShowMessagePopUp(POPUP_MESSAGES.SUCCESS_UPDATE);
+              } else {
+                setShowErrorPopUp(POPUP_MESSAGES.ERROR_UPDATE);
+              }
+            },
+          )
+          .catch();
+      }
+    }, [isFavorite],
+  );
+
   return {
     handleChangeCurrentEstimation,
     currentEstimation,
@@ -154,5 +282,14 @@ export function useDbConnect () {
     handleChangeBirthYear,
     birthYear,
     handleInsertUpdateDB,
+    handleChangeHasChild,
+    hasChild,
+    isRelated,
+    isFavorite,
+    isInRelationShip,
+    handleChangeIsRelated,
+    handleChangeIsInRelationShip,
+    handleAddFavorite,
+    handleDeleteFavorite,
   };
 }

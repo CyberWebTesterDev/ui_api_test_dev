@@ -8,7 +8,6 @@ export const Home = () => {
 
   return (
      <div className={'menu-block'}>
-       {JSON.stringify(context)}
        <a href={'/search-matches'}> Перейти на страницу поиска </a>
        <a href={'/profile-check'}> Перейти на страницу профайла </a>
      </div>

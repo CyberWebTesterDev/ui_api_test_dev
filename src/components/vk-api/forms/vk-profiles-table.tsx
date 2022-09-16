@@ -14,10 +14,28 @@ export const VkProfilesTable = ({
   profilesFound,
 }: TVkProfilesTable) => {
   const [selectedTdId, setSelectedTdId] = React.useState('');
+  const [checkedId, setCheckedId] = React.useState('');
+  const [className, setClassName] = React.useState('');
+
+  console.log('VkProfilesTable', {
+    selectedTdId,
+    checkedId,
+  });
 
   const handleSelectedTd = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const event = e.target as HTMLAnchorElement;
     setSelectedTdId(event.id);
+  };
+
+  const handleCheckedId = (id: string) => {
+    setCheckedId(id);
+  };
+
+  const getClassName = (id: string) => {
+    if (selectedTdId === id) {
+      return 'selected-tr';
+    }
+    return '';
   };
 
   if (profilesFound?.length === 0 || !profilesFound) {
@@ -26,7 +44,7 @@ export const VkProfilesTable = ({
   const tableHead = Object.keys(VK_NAMES_BY_KEY_MAP).map(
     (key, idx) => {
       return (
-         <th key={key + '_' + idx}>{key}</th>
+         <th key={key + '_' + idx}>{VK_NAMES_BY_KEY_MAP[key as keyof typeof VK_NAMES_BY_KEY_MAP]}</th>
       );
     },
   );
@@ -38,7 +56,7 @@ export const VkProfilesTable = ({
          <tr
             key={`tr-${idx}-${profile.id}`}
             id={`${profile?.id}`}
-            className={selectedTdId === profile?.id.toString() ? 'selected-tr' : ''}
+            className={getClassName(profile.id.toString())}
          >
            <td key={`td-${idx}-${profile.id}`}>
              {profile?.id}
@@ -68,7 +86,7 @@ export const VkProfilesTable = ({
            <td key={`td-${idx + 2}-${profile.id}`}>{profile?.first_name}</td>
            <td key={`td-${idx + 3}-${profile.id}`}>{profile?.last_name}</td>
            <td key={`td-${idx + 4}-${profile.id}`}>{profile?.bdate}</td>
-           <Intersection profile={profile} />
+           <Intersection profile={profile} handleIntersectionId={handleCheckedId} />
          </tr>
       );
     },

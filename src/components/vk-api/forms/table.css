@@ -44,6 +44,10 @@
     background-color: rgba(236, 153, 18, 0.83);
 }
 
+.checked-tr {
+    background-color: #80d5e7;
+}
+
 .id-link {
     cursor: pointer;
     padding: 10px;

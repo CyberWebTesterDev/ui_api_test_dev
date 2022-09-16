@@ -11,4 +11,6 @@ export const POPUP_MESSAGES = {
   ERROR_ENRICH: 'При записи профайла в БД возникла ошибка',
   SUCCESS_LOAD_DATA: 'Данные загружены',
   ERROR_LOAD_DATA: 'При загрузке данных произошла ошибка',
+  SUCCESS_COMMENT_UPDATE: 'Комментарий обновлён',
+  ERROR_COMMENT_UPDATE: 'При обновлении комментария произошла ошибка',
 };

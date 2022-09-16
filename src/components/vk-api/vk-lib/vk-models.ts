@@ -7,6 +7,18 @@ export const VK_NAMES_BY_KEY_MAP = {
   bdate: 'Дата рождения',
 };
 
+export type StringExt = string & {
+  addHours(number: number): void;
+  toISOString(): any;
+};
+
+export type TComment = {
+  change_date: string | Date;
+  creation_date: string | Date;
+  id: string;
+  text: string | null;
+}
+
 export type TProfileVK = {
   bdate: string | undefined;
   sex: number;
@@ -53,12 +65,12 @@ export type TProfileDB = {
   check_update: string | Date;
   birth_date: string | null;
   birth_year: string;
-  city: string;
-  counters_followers: string;
-  counters_friends: string;
+  city: string | null;
+  counters_followers: string | null;
+  counters_friends: string | null;
   counters_photos: string;
   creation_date: string | Date;
-  deactivated: boolean;
+  deactivated: boolean | null;
   estimation: number | null;
   first_name: string;
   last_name: string;
@@ -70,8 +82,6 @@ export type TProfileDB = {
   is_favorite: boolean | null;
   is_related: boolean | null;
   id: string;
-  addHours(number: number): void;
-  toISOString(): any;
 }
 
 export type TProfileDBExtended = TProfileDB & {
@@ -118,6 +128,15 @@ export type TServerUpdateCommand = {
   rowsAsArray: boolean;
   rowCount: number;
   rows: any[];
+}
+
+export type TServerUpdateCommandE = {
+  command: string;
+  fields: any[];
+  rowsAsArray: boolean;
+  rowCount: number;
+  rows: any[];
+  isSuccess: boolean;
 }
 
 export type TServerUpdateReturnCode = {

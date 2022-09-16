@@ -8,9 +8,10 @@
     padding-top: 35px;
     height: 500px;
     margin-left: 15px;
-    margin-top: 230px;
+    margin-top: 15px;
     background-color: #4a9898;
     position: absolute;
+    top: 15px;
 }
 
 .profile-check-container-vk {
@@ -22,11 +23,11 @@
     padding-bottom: 25px;
     padding-top: 35px;
     height: 500px;
-    margin: 15px;
+    margin-top: 15px;
     background-color: #4a9898;
     position: absolute;
     left: 1000px;
-    top: 50px;
+    top: 15px;
 }
 
 .props-block {

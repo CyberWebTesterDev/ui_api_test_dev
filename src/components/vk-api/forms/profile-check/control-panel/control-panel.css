@@ -16,9 +16,10 @@
 
 .control-panel-db {
     font-size: 20px;
-    position: relative;
     margin-left: 15px;
-    top: 20px;
+    top: 100px;
+    position: relative;
+    left: 1800px;
 }
 
 .db-buttons-block {
@@ -34,6 +35,12 @@
 .selections-container {
     padding: 2px;
     margin: 2px;
+    width: 1200px;
+    display: grid;
+}
+
+.selections-container > label {
+    margin: 5px;
 }
 
 .select-rating-est {
@@ -60,4 +67,30 @@
 .no-data-span {
     font-size: 25px;
     color: #8b8b9a;
+}
+
+.favorite-button {
+    width: 150px;
+    margin-left: 5px;
+}
+
+.favorite-mark {
+    color: #0aa1a1;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.no-db-block {
+    position: relative;
+    left: 1800px;
+    top: 500px;
+    padding: 10px;
+    font-size: 25px;
+    display: grid;
+}
+
+.no-db-block > button {
+    margin: 10px;
+    width: 170px;
+    height: 30px;
 }
