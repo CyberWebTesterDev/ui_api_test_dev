@@ -23,12 +23,6 @@ export const Intersection = ({ profile, handleIntersectionId }: TIntersection) =
     [profilesIntersections],
   );
 
-  console.log('Intersection', {
-    profileId: profile?.id,
-    isIntersected,
-    profilesIntersections,
-  });
-
   return isIntersected
     ? <td key={`int-${profile?.id}`} className={'true-td'}>Да</td> : <td key={`int-${profile?.id}`} className={'false-td'}>Нет</td>;
 };

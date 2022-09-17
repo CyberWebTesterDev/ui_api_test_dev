@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TProfileVK, TProfileDBExtended, TProfileCheckDB } from './vk-lib/vk-models';
+import { TProfileVK, TProfileDBExtended, TProfileCheckDB, THistoryComment } from './vk-lib/vk-models';
 
 export type TContext = {
   inputsData: {
@@ -21,6 +21,7 @@ export type TContext = {
     profileInDb: TProfileDBExtended | null;
     profileVKData: TProfileVK | null;
     idSearchParameter?: string;
+    historyComments?: THistoryComment[];
   };
 };
 
@@ -36,7 +37,7 @@ export const defaultContext: TContext = {
     city: '0',
     month: '0',
     day: '0',
-    year: '',
+    year: 'null',
   },
   profileCheckForm: {
     profileInDb: null,

@@ -19,7 +19,11 @@
     margin-left: 15px;
     top: 100px;
     position: relative;
-    left: 1800px;
+    left: 1600px;
+    background-color: #afafc2;
+    width: 700px;
+    border-style: solid;
+    padding-left: 30px;
 }
 
 .db-buttons-block {
@@ -33,10 +37,11 @@
 }
 
 .selections-container {
-    padding: 2px;
+    padding-left: 50px;
     margin: 2px;
     width: 1200px;
     display: grid;
+    align-content: center;
 }
 
 .selections-container > label {
@@ -60,7 +65,7 @@
 .data-span {
     font-weight: bold;
     margin-left: 10px;
-    color: #0fbce1;
+    color: #09778f;
     font-size: 25px;
 }
 
@@ -70,8 +75,17 @@
 }
 
 .favorite-button {
+    width: 180px;
+    height: 50px;
+    margin-left: 5px;
+    background-color: #0fbce1;
+    color: #ffffff;
+}
+
+.favorite-button-delete {
     width: 150px;
     margin-left: 5px;
+    background-color: #de2d85;
 }
 
 .favorite-mark {
@@ -82,7 +96,7 @@
 
 .no-db-block {
     position: relative;
-    left: 1800px;
+    left: 1600px;
     top: 500px;
     padding: 10px;
     font-size: 25px;

@@ -12,14 +12,16 @@ import { Favorite } from './options/favorite';
 import { Relation } from './options/relation';
 import { useVkApiContext } from '../../../vk-api-context';
 import { useDbConnect } from './options/use-db-connect';
+import { HistoryComments } from './history/history-comments';
 
 export const ControlPanel = () => {
+  const [isOpenHistoryComments, setIsOpenHistoryComments] = React.useState<boolean>(false);
   const { profileCheckForm: { profileInDb } } = useVkApiContext();
   const { handleInsertUpdateDB } = useDbConnect();
 
   return !!profileInDb ? (
      <div className={'control-panel-db'}>
-       Панель управления
+       <h2>Панель управления</h2>
        <div className={'selections-container'}>
          <Favorite />
          <Estimation/>
@@ -29,7 +31,8 @@ export const ControlPanel = () => {
          <Relationship />
          <Relation />
          <DbConnectApi/>
-         <Comment />
+         <HistoryComments isOpen={isOpenHistoryComments} handleCloseButton={setIsOpenHistoryComments} />
+         <Comment isOpenHistoryBlock={isOpenHistoryComments} handleCloseButton={setIsOpenHistoryComments} />
        </div>
      </div>
   ) : (

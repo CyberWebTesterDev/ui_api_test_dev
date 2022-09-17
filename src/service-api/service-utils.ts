@@ -1,6 +1,6 @@
 import {
   StringExt, TComment,
-  TDateKeys,
+  TDateKeys, THistoryComment,
   TProfileCheckDB,
   TProfileDB,
   TProfileDBExtended,
@@ -25,14 +25,14 @@ type TDateExtended = Date & {
   addHours: (h: number) => Date;
 };
 
-export const formatDate = (arr: (TProfileDB | TProfileCheckDB | TComment)[]) => {
+export const formatDate = (arr: (TProfileDB | TProfileCheckDB | TComment | THistoryComment)[]) => {
   arr.forEach((el, idx) => {
     for (let k in el) {
       for (let i = 0; i < DATE_FIELDS.length; i++) {
         if (
           k === DATE_FIELDS[i] as TDateKeys
         ) {
-          if (el[k as keyof (TProfileDB | TProfileCheckDB | TComment)]) {
+          if (el[k as keyof (TProfileDB | TProfileCheckDB | TComment | THistoryComment)]) {
             // @ts-ignore
             let stringToDateField: StringExt = new Date(el[k]) as unknown as TProfileDB;
             stringToDateField.addHours(3);

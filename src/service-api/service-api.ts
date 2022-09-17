@@ -1,7 +1,7 @@
 import { getMockedProfilesData } from '../components/vk-api/forms/test-data/mocked-data';
 import { formatDate, getParsedJsonArray } from './service-utils';
 import {
-  TComment,
+  TComment, THistoryComment,
   TInsertUpdateDBProfile,
   TProfileCheckDB,
   TProfileDB,
@@ -29,6 +29,7 @@ const API_CONSTANTS = {
   INSERT_UPD_SINGLE_PROFILE: 'insertchecksingle/',
   GET_MATCHES: 'matchfromsearch/',
   GET_POST_VK_ID: 'getpostvkid/',
+  GET_HISTORY_COMMENTS_VK_ID: 'getcommentsvkid/',
   UPDATE_COMMENT_VK_ID: 'insertupdatepostvkid',
   UPDATE_CHILD: 'upd/haschild/',
   UPDATE_RELATIONSHIP: 'upd/isinrelationship/',
@@ -152,6 +153,20 @@ export function useApiVKService () {
       const parsedData = getParsedJsonArray(data) as TComment[];
       formatDate(parsedData);
       return parsedData[0];
+    } catch (e) {
+      throw e;
+    }
+  };
+  const getHistoryCommentsByProfileId = async (profileId: string) => {
+    const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.GET_HISTORY_COMMENTS_VK_ID}${profileId}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('getCommentByProfileId VK received data');
+      console.log(data);
+      const parsedData = getParsedJsonArray(data) as THistoryComment[];
+      formatDate(parsedData);
+      return parsedData;
     } catch (e) {
       throw e;
     }
@@ -448,6 +463,7 @@ export function useApiVKService () {
     updateIsFavorite,
     updateRelation,
     updateRelationship,
+    getHistoryCommentsByProfileId,
   };
 
 }

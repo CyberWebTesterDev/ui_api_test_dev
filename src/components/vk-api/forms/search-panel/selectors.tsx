@@ -36,7 +36,7 @@ export const Seleсtors = () => {
   const years = YEARS.map(
     (year) => {
       return (
-          <option key={year} value={year}>{ year === '0' ? NULL_VALUE_DESCRIPRION[year] : year}</option>
+          <option key={year} value={year}>{ year === 'null' ? NULL_VALUE_DESCRIPRION[year] : year}</option>
       );
     },
   );

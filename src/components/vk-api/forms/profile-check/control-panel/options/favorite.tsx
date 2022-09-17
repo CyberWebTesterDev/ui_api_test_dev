@@ -13,7 +13,7 @@ export const Favorite = () => {
        <span className={'favorite-mark'}>&#10003;</span>
        <button
           onClick={() => handleDeleteFavorite()}
-          className={'favorite-button'}
+          className={'favorite-button-delete'}
        >
          Удалить из избранных
        </button>

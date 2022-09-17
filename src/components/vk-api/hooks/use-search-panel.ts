@@ -27,6 +27,14 @@ export function useSearchPanelInputs() {
       setShowErrorPopUp('Выберите город!');
       return false;
     }
+    if (quantity.length > 3) {
+      setShowErrorPopUp('Количество не может превышать трехзначное число');
+      return false;
+    }
+    if (offset.length > 3) {
+      setShowErrorPopUp('offset не может превышать трехзначное число');
+      return false;
+    }
     return true;
   };
 
@@ -67,7 +75,7 @@ export function useSearchPanelInputs() {
   );
 
   const getAges = () => {
-    if (year) {
+    if (year !== 'null') {
       return {
         ageFrom: '0',
         ageTo: '0',

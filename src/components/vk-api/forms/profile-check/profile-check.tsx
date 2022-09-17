@@ -10,25 +10,21 @@ export const ProfileCheck = () => {
   useProfileCheck();
   const context = useVkApiContext();
   const { profileCheckForm: { profileInDb, idSearchParameter, profileVKData } } = context;
-
-  React.useEffect(
-    () => {
-      console.log('ProfileCheck profileInDb changed', {
-        context,
-      });
-    }, [profileInDb, profileVKData],
-  );
+  const hasProfileInDb = !!profileInDb;
 
   return (
      <>
        <ControlPanel/>
-       <div className={'profile-check-container'}>
-         <span>Данные из БД {idSearchParameter ? `${idSearchParameter}` : ''}</span>
-         <div className={'props-block'}>
-           <div className={'foto-profile'}></div>
-           <ProfileFields profile={profileInDb} />
-         </div>
-       </div>
+       {
+         hasProfileInDb && (
+          <div className={'profile-check-container'}>
+            <span>Данные из БД {idSearchParameter ? `${idSearchParameter}` : ''}</span>
+            <div className={'props-block'}>
+              <div className={'foto-profile'}></div>
+              <ProfileFields profile={profileInDb} />
+            </div>
+          </div>)
+       }
        <div className={'profile-check-container-vk'}>
          <span>Данные из ВК {idSearchParameter ? `${idSearchParameter}` : ''}</span>
          <div className={'props-block'}>

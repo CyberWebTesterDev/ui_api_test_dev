@@ -14,7 +14,7 @@ export const Inputs = () => {
     handleChangeAgeFrom,
     handleChangeAgeTo,
   } = useSearchPanelInputs();
-  const isDisabledAge = year !== '0';
+  const isDisabledAge = year !== 'null';
 
   return (
      <>

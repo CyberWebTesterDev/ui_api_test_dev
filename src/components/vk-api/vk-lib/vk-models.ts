@@ -104,6 +104,13 @@ export type TProfileCheckDB = {
   is_in_relationship: boolean | null;
 }
 
+export type THistoryComment = {
+  id: string;
+  vk_id: string;
+  text: string;
+  creation_date: string;
+}
+
 export type TInsertUpdateDBProfile = Pick<
 TProfileVK,
 'id'

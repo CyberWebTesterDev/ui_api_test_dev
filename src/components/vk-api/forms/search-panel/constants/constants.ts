@@ -58,8 +58,10 @@ export const MONTHS: { [key: string]: string; } = {
 
 export const NULL_VALUE_DESCRIPRION: { [key: string]: string; } = {
   '0': 'Не выбрано',
+  '': 'Не выбрано',
+  'null': 'Не выбрано',
 };
 
-export const YEARS = ['0'].concat(Array(20).fill(1985).map((n, i) => { return (n + i).toString(); }));
+export const YEARS = ['null'].concat(Array(20).fill(1985).map((n, i) => { return (n + i).toString(); }));
 
 export const DAYS = Array(32).fill(0).map((n, i) => { return (n + i).toString(); });

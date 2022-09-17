@@ -8,6 +8,9 @@
     width: 500px;
     height: 200px;
     font-size: 20px;
+    position: relative;
+    resize: none;
+    display: block;
 }
 .comment-text-disabled {
     width: 500px;

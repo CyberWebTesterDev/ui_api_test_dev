@@ -4,36 +4,23 @@ import { useApplicationContext } from '../../../application-container/app-contex
 import { useVkApiContext } from '../../vk-api-context';
 import { useApiVKService } from '../../../../service-api/service-api';
 import { useMatch } from 'react-router-dom';
+import { d } from '@pmmmwh/react-refresh-webpack-plugin/types/options';
 
 export function useProfileCheck() {
   const [id, setId] = React.useState<string>('');
-  const { getProfileDBExtendedInfoById, getProfileInfoById } = useApiVKService();
+  const { getProfileDBExtendedInfoById, getProfileInfoById, getHistoryCommentsByProfileId } = useApiVKService();
   const { updateStateContext } = useApplicationContext();
   const context = useVkApiContext();
   const match = useMatch('profile-check/:id');
 
-  const getProfileInDbData = async () => {
-    if (id) {
-      const dataDb = await getProfileDBExtendedInfoById(id);
-      return dataDb;
-    }
-    return null;
-  };
-
-  const getProfileInVKData = async () => {
-    if (id) {
-      const dataVk = await getProfileInfoById(id);
-      return dataVk;
-    }
-    return null;
-  };
-
   const getAllData = async () => {
-    const dataVk = await getProfileInVKData();
-    const dataDb = await getProfileInDbData();
+    const dataVk = await getProfileInfoById(id);
+    const dataDb = await getProfileDBExtendedInfoById(id);
+    const historyComments = await getHistoryCommentsByProfileId(id);
     return {
       dataVk,
       dataDb,
+      historyComments,
     };
   };
 
@@ -64,6 +51,7 @@ export function useProfileCheck() {
                 profileInDb: data?.dataDb,
                 profileVKData: data.dataVk,
                 idSearchParameter: id,
+                historyComments: data.historyComments,
               },
             });
           },
@@ -71,5 +59,4 @@ export function useProfileCheck() {
       }
     }, [id],
   );
-
 }

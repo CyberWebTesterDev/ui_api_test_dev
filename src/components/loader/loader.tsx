@@ -6,7 +6,7 @@ export const Loader = () => {
   const { loader: { isLoading } } = useServiceContext();
 
   return isLoading ? (
-     <div className="b-popup">
+     <div className="dimmer-block-loader">
        <div className="b-popup-content">
          Ожидание ответа от сервера <br/><span>...</span>
          <div className="d-flex justify-content-center">
