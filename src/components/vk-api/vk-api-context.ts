@@ -10,6 +10,7 @@ export type TContext = {
     ageTo: string;
   };
   profilesFound?: (TProfileVK | null)[];
+  profilesFoundInDb?: (TProfileDBExtended)[] | null;
   profilesIntersections?: (TProfileCheckDB | undefined)[];
   selectorsData: {
     city: string;

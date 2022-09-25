@@ -8,7 +8,8 @@ export const Seleсtors = () => {
   const {
     handleOnChangeSelect,
   } = useSearchPanelInputs();
-  const { selectorsData: { city, month } } = useVkApiContext();
+  const { selectorsData: { city, month }, inputsData: { ageTo, ageFrom } } = useVkApiContext();
+  const isYearDisabled = Boolean(ageFrom || ageTo);
 
   const cities = Object.keys(CITY_OPTION_VALUES).map(
     (city) => {
@@ -56,7 +57,7 @@ export const Seleсtors = () => {
          {days}
        </select>
        <label htmlFor="year">Выберите год: </label>
-       <select id={'year'} onChange={(e) => handleOnChangeSelect(e)}>
+       <select id={'year'} disabled={isYearDisabled} onChange={(e) => handleOnChangeSelect(e)}>
          {years}
        </select>
      </div>

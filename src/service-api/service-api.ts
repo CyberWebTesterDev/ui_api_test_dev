@@ -8,7 +8,6 @@ import {
   TProfileDBExtended,
   TProfileVK,
   TServerUpdateCommand, TServerUpdateCommandE,
-  TServerUpdateCommandSuccess,
   TServerUpdateReturnCode,
   TServerUpdateReturnCodePromise,
 } from '../components/vk-api/vk-lib/vk-models';
@@ -35,6 +34,7 @@ const API_CONSTANTS = {
   UPDATE_RELATIONSHIP: 'upd/isinrelationship/',
   UPDATE_FAVORITE: 'updfavor/',
   UPDATE_RELATION: 'updrelated/',
+  SEARCH_PROFILES_DB: 'searchprofilesdb/',
 };
 
 export function useApiVKService () {
@@ -117,7 +117,8 @@ export function useApiVKService () {
           if (countNonNullElementsInArray(profilesData) === 0 || !profilesData) {
             await waitTimeout(5000);
             await getDataInLoop();
-            await getCheckedData(cnt++);
+            cnt++;
+            await getCheckedData(cnt);
           } else {
             return profilesData;
           }
@@ -197,6 +198,32 @@ export function useApiVKService () {
       const parsedData = getParsedJsonArray(data) as TProfileDBExtended[];
       formatDate(parsedData);
       return parsedData[0];
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const getProfilesDBExtendedByEstOrCorrEst = async (
+    est: string,
+    corrEst: string,
+    dbCreationDateFrom: string,
+    dbCreationDateBefore: string,
+    isFavorite: string,
+    isRelated: string,
+  ): Promise<TProfileDBExtended[]> => {
+    const estimation = est ? est : '3';
+    const corrEstimation = corrEst ? corrEst : '0.3';
+    const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}`
+       + `${API_CONSTANTS.SEARCH_PROFILES_DB}${estimation}/${corrEstimation}/${encodeURIComponent(dbCreationDateFrom)}`
+       + `/${encodeURIComponent(dbCreationDateBefore)}/${isFavorite}/${isRelated}`;
+    try {
+      const response = await fetch(url);
+      const data: string[] = await response.json();
+      console.log('getProfilesDBExtendedByEstOrCorrEst received data');
+      console.log(getParsedJsonArray(data));
+      const parsedData = getParsedJsonArray(data) as TProfileDBExtended[];
+      formatDate(parsedData);
+      return parsedData;
     } catch (e) {
       throw e;
     }
@@ -369,7 +396,7 @@ export function useApiVKService () {
     }
   };
 
-  const estimateProfileById = async (estimation: string, profileId: string): Promise<TServerUpdateCommandSuccess> => {
+  const estimateProfileById = async (estimation: string, profileId: string): Promise<TServerUpdateCommandE> => {
     const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.ESTIMATE_PROFILE_ID}${estimation}/${profileId}`;
     if (estimation && profileId) {
       try {
@@ -391,7 +418,7 @@ export function useApiVKService () {
     }
   };
 
-  const corrEstimateProfileById = async (corrEstimation: string, profileId: string): Promise<TServerUpdateCommandSuccess> => {
+  const corrEstimateProfileById = async (corrEstimation: string, profileId: string): Promise<TServerUpdateCommandE> => {
     const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.CORR_ESTIMATE_PROFILE_ID}${corrEstimation}/${profileId}`;
     if (corrEstimation && profileId) {
       try {
@@ -464,6 +491,7 @@ export function useApiVKService () {
     updateRelation,
     updateRelationship,
     getHistoryCommentsByProfileId,
+    getProfilesDBExtendedByEstOrCorrEst,
   };
 
 }

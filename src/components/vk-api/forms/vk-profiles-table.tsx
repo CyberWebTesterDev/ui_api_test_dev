@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
-import { VK_NAMES_BY_KEY_MAP, TProfileVK, TProfileCheckDB } from '../vk-lib/vk-models';
+import { VK_NAMES_BY_KEY_MAP, TProfileVK } from '../vk-lib/vk-models';
 import './table.css';
-import { useVkApiContext } from '../vk-api-context';
 import { countNonNullElementsInArray } from '../utils/vk-data-utild';
 import { Intersection } from './intersection';
 
@@ -14,21 +13,10 @@ export const VkProfilesTable = ({
   profilesFound,
 }: TVkProfilesTable) => {
   const [selectedTdId, setSelectedTdId] = React.useState('');
-  const [checkedId, setCheckedId] = React.useState('');
-  const [className, setClassName] = React.useState('');
-
-  console.log('VkProfilesTable', {
-    selectedTdId,
-    checkedId,
-  });
 
   const handleSelectedTd = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const event = e.target as HTMLAnchorElement;
     setSelectedTdId(event.id);
-  };
-
-  const handleCheckedId = (id: string) => {
-    setCheckedId(id);
   };
 
   const getClassName = (id: string) => {
@@ -86,7 +74,7 @@ export const VkProfilesTable = ({
            <td key={`td-${idx + 2}-${profile.id}`}>{profile?.first_name}</td>
            <td key={`td-${idx + 3}-${profile.id}`}>{profile?.last_name}</td>
            <td key={`td-${idx + 4}-${profile.id}`}>{profile?.bdate}</td>
-           <Intersection profile={profile} handleIntersectionId={handleCheckedId} />
+           <Intersection profile={profile} />
          </tr>
       );
     },

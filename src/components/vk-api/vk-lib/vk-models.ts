@@ -7,6 +7,17 @@ export const VK_NAMES_BY_KEY_MAP = {
   bdate: 'Дата рождения',
 };
 
+export const VK_NAMES_DB_BY_KEY_MAP = {
+  vk_id: 'Id VK аккаунта',
+  first_name: 'Имя',
+  last_name: 'Фамилия',
+  birth_date: 'Дата рождения',
+  estimation: 'Оценка профайла',
+  correlation_est: 'Оценка вер.отношений',
+  creation_date: 'Дата создания в БД',
+  update_time: 'Дата обновления в БД',
+};
+
 export type StringExt = string & {
   addHours(number: number): void;
   toISOString(): any;
@@ -154,7 +165,3 @@ export type TServerUpdateReturnCodePromise = {
   returnCode: string;
   isSuccess: boolean;
 }
-
-export type TServerUpdateCommandSuccess = TServerUpdateCommand & {
-  isSuccess: boolean;
-};

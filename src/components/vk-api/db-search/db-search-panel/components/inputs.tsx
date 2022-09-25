@@ -6,6 +6,7 @@ type TInput = {
   value: string;
   disabled?: boolean;
   id: string;
+  type?: string;
 }
 
 export const Input = ({
@@ -14,11 +15,13 @@ export const Input = ({
   value,
   disabled = false,
   id,
+  type = 'text',
 }: TInput) => {
 
   return (
      <div>
-       <span> {labelName}: </span> <input id={id} onChange={(e) => onChangeListener(e)} value={value} disabled={disabled}/>
+       <span> {labelName}: </span>
+       <input id={id} onChange={(e) => onChangeListener(e)} value={value} disabled={disabled} type={type}/>
      </div>
   );
 };

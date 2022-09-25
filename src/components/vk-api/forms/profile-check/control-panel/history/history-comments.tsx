@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './history-comments.css';
 import { HistoryComment } from './history-comment';
-import { useProfileCheck } from '../../use-profile-check';
 import { useVkApiContext } from '../../../../vk-api-context';
 
 type THistoryComments = {

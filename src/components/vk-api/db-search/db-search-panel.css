@@ -1,7 +1,7 @@
 .db-search-form {
     width: 500px;
     height: fit-content;
-    border: #508181;
+    border-color: #508181;
     border-style: solid;
     display: grid;
     margin-left: 10px;
@@ -10,4 +10,9 @@
     padding-bottom: 10px;
     padding-top: 10px;
     position: relative;
+}
+
+#btn-db-search {
+    margin-top: 30px;
+    width: 150px;
 }
