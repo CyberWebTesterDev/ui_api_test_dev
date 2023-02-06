@@ -8,6 +8,7 @@ export const DbConnectApi = () => {
   const hasProfileInDb = !!profileInDb;
   const hasProfileInCheckTable = Boolean(hasProfileInDb && profileInDb?.first_checked);
   const text = hasProfileInCheckTable ? 'Перезаписать' : 'Записать';
+
   const hasChildBlock = React.useMemo(
     () => {
       if (blockCheckPredicate(profileInDb?.has_child)) {
@@ -19,6 +20,7 @@ export const DbConnectApi = () => {
       return <span className={'no-data-span'}>Нет данных о наличии ребёнка</span>;
     }, [profileInDb],
   );
+
   const isInRelationshipBlock = React.useMemo(
     () => {
       if (blockCheckPredicate(profileInDb?.is_in_relationship)) {
@@ -30,6 +32,7 @@ export const DbConnectApi = () => {
       return <span className={'no-data-span'}>Нет данных об отношениях</span>;
     }, [profileInDb],
   );
+
   const isRelatedBlock = React.useMemo(
     () => {
       if (blockCheckPredicate(profileInDb?.is_related)) {
