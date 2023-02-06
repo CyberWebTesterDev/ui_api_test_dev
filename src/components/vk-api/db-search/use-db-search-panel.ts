@@ -19,7 +19,7 @@ const defaultState = {
 
 export function useDbSearchPanel () {
   const [state, setState] = React.useState(defaultState);
-  const { getProfilesDBExtendedByEstOrCorrEst } = useApiVKService();
+  const { getProfilesDBExtendedByEstOrCorrEst, getFirstLineProfiles } = useApiVKService();
   const { updateStateContext } = useApplicationContext();
   const context = useVkApiContext();
   const { setShowErrorPopUp } = usePopups();
@@ -104,6 +104,14 @@ export function useDbSearchPanel () {
     });
   };
 
+  const searchFirstLineProfiles = async () => {
+    const firstLineProfiles = await getFirstLineProfiles();
+    updateStateContext({
+      ...context,
+      profilesFoundInDb: firstLineProfiles,
+    });
+  };
+
   const validateInputs = () => {
     const { inputs: { creationDbDateFrom, creationDbDateBefore } } = state;
     if (creationDbDateFrom > creationDbDateBefore) {
@@ -118,5 +126,6 @@ export function useDbSearchPanel () {
     inputs: state.inputs,
     searchProfilesInDbByInputs,
     validateInputs,
+    searchFirstLineProfiles,
   };
 }

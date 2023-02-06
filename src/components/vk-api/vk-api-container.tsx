@@ -14,6 +14,7 @@ export const VkApiContainer = () => {
     });
   }, [profilesFound, profilesIntersections],
   );
+
   return (
      <>
        <SearchPanel/>

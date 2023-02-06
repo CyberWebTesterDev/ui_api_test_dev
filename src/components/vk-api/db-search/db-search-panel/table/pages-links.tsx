@@ -15,6 +15,7 @@ export const TablesLinks = ({ numberOfPages, setCurrentPageNumber }: TTableLinks
        {pages.map(
          (page, idx) => (
             <span
+               key={`${idx}_link`}
                className={'page-number'}
                onClick={() => setCurrentPageNumber(page)}>
               {page} {hasManyPages && idx !== endIndex ? ',' : ''}

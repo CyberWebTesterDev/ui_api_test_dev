@@ -23,6 +23,7 @@ export const CorrelationEstimation = () => {
            <option value="0.55">0.55</option>
            <option value="0.57">0.57</option>
            <option value="0.6">0.6</option>
+           <option value="0.62">0.62</option>
            <option value="0.65">0.65</option>
            <option value="0.7">0.7</option>
            <option value="0.75">0.75</option>

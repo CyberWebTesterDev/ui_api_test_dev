@@ -19,6 +19,7 @@ export const ProfileFields = ({ profile }: TProfileFields) => {
   const propFields = Object.keys(profile).map(
     key => {
       const value = profile[key as keys]?.toString();
+
       return BASIC_FIELDS.some(field => field === key) && (
          <div key={key} className={'property-field'}>
            {BASIC_FIELDS_MAP_NAMES[key as keyof typeof BASIC_FIELDS_MAP_NAMES] ?? key}

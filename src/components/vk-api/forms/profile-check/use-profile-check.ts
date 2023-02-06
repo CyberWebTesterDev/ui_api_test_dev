@@ -4,7 +4,6 @@ import { useApplicationContext } from '../../../application-container/app-contex
 import { useVkApiContext } from '../../vk-api-context';
 import { useApiVKService } from '../../../../service-api/service-api';
 import { useMatch } from 'react-router-dom';
-import { d } from '@pmmmwh/react-refresh-webpack-plugin/types/options';
 
 export function useProfileCheck() {
   const [id, setId] = React.useState<string>('');

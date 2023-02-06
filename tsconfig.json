@@ -13,7 +13,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
   },
   "include": [
     "next-env.d.ts",

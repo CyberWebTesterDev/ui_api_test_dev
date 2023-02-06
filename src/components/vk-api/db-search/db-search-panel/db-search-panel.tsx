@@ -9,6 +9,7 @@ export const DbSearchPanel = () => {
     onChangeListener,
     inputs,
     validateInputs,
+    searchFirstLineProfiles,
   } = useDbSearchPanel();
 
   return (
@@ -54,6 +55,7 @@ export const DbSearchPanel = () => {
           type={'checkbox'}
        />
        <button id={'btn-db-search'} onClick={() => validateInputs()}>Поиск</button>
+       <button id={'btn-db-search'} onClick={() => searchFirstLineProfiles()}>Получить первую очередь</button>
      </div>
   );
 };

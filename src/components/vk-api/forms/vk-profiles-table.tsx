@@ -9,9 +9,7 @@ type TVkProfilesTable = {
   profilesFound: (TProfileVK | null)[] | undefined;
 }
 
-export const VkProfilesTable = ({
-  profilesFound,
-}: TVkProfilesTable) => {
+export const VkProfilesTable = ({ profilesFound }: TVkProfilesTable) => {
   const [selectedTdId, setSelectedTdId] = React.useState('');
 
   const handleSelectedTd = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -29,6 +27,7 @@ export const VkProfilesTable = ({
   if (profilesFound?.length === 0 || !profilesFound) {
     return null;
   }
+
   const tableHead = Object.keys(VK_NAMES_BY_KEY_MAP).map(
     (key, idx) => {
       return (
@@ -36,7 +35,9 @@ export const VkProfilesTable = ({
       );
     },
   );
+
   tableHead.push(<th key={'th_checked'}>Уже проверен?</th>);
+
   const tableBody = profilesFound.map(
     (profile, idx) => {
 

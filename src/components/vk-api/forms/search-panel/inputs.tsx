@@ -7,6 +7,7 @@ export const Inputs = () => {
     inputsData: { name, ageFrom, ageTo, offset, quantity },
     selectorsData: { year },
   } = useVkApiContext();
+
   const {
     handleChangeName,
     handleChangeOffset,
@@ -14,6 +15,7 @@ export const Inputs = () => {
     handleChangeAgeFrom,
     handleChangeAgeTo,
   } = useSearchPanelInputs();
+
   const isDisabledAge = year !== 'null';
 
   return (

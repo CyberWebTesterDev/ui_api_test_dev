@@ -8,7 +8,9 @@ export const Seleсtors = () => {
   const {
     handleOnChangeSelect,
   } = useSearchPanelInputs();
+
   const { selectorsData: { city, month }, inputsData: { ageTo, ageFrom } } = useVkApiContext();
+
   const isYearDisabled = Boolean(ageFrom || ageTo);
 
   const cities = Object.keys(CITY_OPTION_VALUES).map(
@@ -18,6 +20,7 @@ export const Seleсtors = () => {
       );
     },
   );
+
   const months = Object.keys(MONTHS).map(
     (number) => {
       return (

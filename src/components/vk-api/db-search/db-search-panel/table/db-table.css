@@ -53,3 +53,15 @@
 .td-id-cell {
     display: grid;
 }
+
+.high {
+    background-color: rgba(113, 241, 241, 0.69);
+}
+
+.medium-high {
+    background-color: rgba(153, 255, 255, 0.36);
+}
+
+.medium-pre-high {
+    background-color: rgba(208, 208, 222, 0.58);
+}

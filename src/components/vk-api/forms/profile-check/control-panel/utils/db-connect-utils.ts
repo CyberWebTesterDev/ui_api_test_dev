@@ -27,3 +27,7 @@ export const gerPreparedProfileToUpdateInDb = (profileVK: TProfileVK): TInsertUp
   }
   return;
 };
+
+export const blockCheckPredicate = (arg1?: null| boolean): boolean => {
+  return typeof arg1 !== 'undefined' && arg1 !== null;
+};

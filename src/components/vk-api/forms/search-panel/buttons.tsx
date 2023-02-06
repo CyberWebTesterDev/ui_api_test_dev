@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useSearchPanelActions, useSearchPanelInputs } from '../../hooks/use-search-panel';
-import { usePopups } from '../../../pop-ups/popups-hooks';
+import { useSearchPanelInputs } from '../../hooks/use-search-panel';
 
 export const Buttons = () => {
   const { handleSearchMatchedProfiles, testGetProfilesCheckDBByIds } = useSearchPanelInputs();

@@ -148,12 +148,7 @@ export type TServerUpdateCommand = {
   rows: any[];
 }
 
-export type TServerUpdateCommandE = {
-  command: string;
-  fields: any[];
-  rowsAsArray: boolean;
-  rowCount: number;
-  rows: any[];
+export type TServerUpdateCommandE = TServerUpdateCommand & {
   isSuccess: boolean;
 }
 
@@ -161,7 +156,6 @@ export type TServerUpdateReturnCode = {
   returnCode: string;
 }
 
-export type TServerUpdateReturnCodePromise = {
-  returnCode: string;
+export type TServerUpdateReturnCodePromise = TServerUpdateReturnCode & {
   isSuccess: boolean;
 }

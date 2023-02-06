@@ -9,6 +9,7 @@ import { Loader } from './components/loader/loader';
 import { PopUpContainer } from './components/pop-ups/pop-up-container';
 import { defaultServiceContext, ServiceContext } from './service-api/service-context';
 import { DbSearchContainer } from './components/vk-api/db-search/db-search-container';
+import { GameContainer } from './components/game/game-container';
 
 const AppComponent = () => {
   const [state, setStateContext] = React.useState(defaultContext);
@@ -58,6 +59,7 @@ const AppComponent = () => {
              <Route path='/search-matches' element={<VkApiContainer />} />
              <Route path='/db-search' element={<DbSearchContainer />} />
              <Route path='/profile-check/:id' element={<ProfileCheck />} />
+             <Route path='/game' element={<GameContainer />} />
            </Routes>
          </ServiceContext.Provider>
        </VkApiContext.Provider>

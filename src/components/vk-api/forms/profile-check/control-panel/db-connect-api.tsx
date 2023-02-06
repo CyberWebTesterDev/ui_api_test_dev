@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useVkApiContext } from '../../../vk-api-context';
 import { useDbConnect } from './options/use-db-connect';
+import { blockCheckPredicate } from './utils/db-connect-utils';
 
 export const DbConnectApi = () => {
   const { profileCheckForm: { profileInDb } } = useVkApiContext();
@@ -9,8 +10,8 @@ export const DbConnectApi = () => {
   const text = hasProfileInCheckTable ? 'Перезаписать' : 'Записать';
   const hasChildBlock = React.useMemo(
     () => {
-      if (typeof profileInDb?.has_child !== 'undefined' && profileInDb.has_child !== null) {
-        const labelText = profileInDb.has_child ? 'Да' : 'Нет';
+      if (blockCheckPredicate(profileInDb?.has_child)) {
+        const labelText = profileInDb!.has_child ? 'Да' : 'Нет';
         return <span className={'label-span-field'}>Наличие ребёнка:
           <span className={'data-span'}>{labelText}</span>
         </span>;
@@ -20,8 +21,8 @@ export const DbConnectApi = () => {
   );
   const isInRelationshipBlock = React.useMemo(
     () => {
-      if (typeof profileInDb?.is_in_relationship !== 'undefined' && profileInDb.is_in_relationship !== null) {
-        const labelText = profileInDb.is_in_relationship ? 'Да' : 'Нет';
+      if (blockCheckPredicate(profileInDb?.is_in_relationship)) {
+        const labelText = profileInDb!.is_in_relationship ? 'Да' : 'Нет';
         return <span className={'label-span-field'}>В отношениях?:
           <span className={'data-span'}>{labelText}</span>
         </span>;
@@ -31,8 +32,8 @@ export const DbConnectApi = () => {
   );
   const isRelatedBlock = React.useMemo(
     () => {
-      if (typeof profileInDb?.is_related !== 'undefined' && profileInDb.is_related !== null) {
-        const labelText = profileInDb.is_related ? 'Да' : 'Нет';
+      if (blockCheckPredicate(profileInDb?.is_related)) {
+        const labelText = profileInDb!.is_related ? 'Да' : 'Нет';
         return <span className={'label-span-field'}>Была ли связь в жизни/знакомство?:
           <span className={'data-span'}>{labelText}</span>
         </span>;

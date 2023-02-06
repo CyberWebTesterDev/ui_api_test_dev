@@ -24,3 +24,5 @@ export const STANDARD_INPUT_VALUES = {
     DEFAULT_VALUE: 'null',
   },
 };
+
+export const DEFAULT_LOAD_NUMBER_BY_PAGE = 25;

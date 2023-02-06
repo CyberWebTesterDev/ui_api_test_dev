@@ -8,21 +8,10 @@ import {
 } from '../components/vk-api/vk-lib/vk-models';
 import { DATE_FIELDS } from './service-constants';
 
-class DateE extends Date {
-  addHours = (h: number) => {
-    this.setTime(this.getTime() + h * 60 * 60 * 1000);
-    return this;
-  };
-}
-
 // @ts-ignore
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
   return this;
-};
-
-type TDateExtended = Date & {
-  addHours: (h: number) => Date;
 };
 
 export const formatDate = (arr: (TProfileDB | TProfileCheckDB | TComment | THistoryComment)[]) => {

@@ -35,6 +35,7 @@ const API_CONSTANTS = {
   UPDATE_FAVORITE: 'updfavor/',
   UPDATE_RELATION: 'updrelated/',
   SEARCH_PROFILES_DB: 'searchprofilesdb/',
+  GET_FIRST_LINE_PROFILES: 'getfirtslineprofiles/',
 };
 
 export function useApiVKService () {
@@ -220,6 +221,21 @@ export function useApiVKService () {
       const response = await fetch(url);
       const data: string[] = await response.json();
       console.log('getProfilesDBExtendedByEstOrCorrEst received data');
+      console.log(getParsedJsonArray(data));
+      const parsedData = getParsedJsonArray(data) as TProfileDBExtended[];
+      formatDate(parsedData);
+      return parsedData;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const getFirstLineProfiles = async (): Promise<TProfileDBExtended[]> => {
+    const url = `${API_CONSTANTS.URI_BASE}${API_CONSTANTS.DB_MG}${API_CONSTANTS.GET_FIRST_LINE_PROFILES}`;
+    try {
+      const response = await fetch(url);
+      const data: string[] = await response.json();
+      console.log('getFirstLineProfiles received data');
       console.log(getParsedJsonArray(data));
       const parsedData = getParsedJsonArray(data) as TProfileDBExtended[];
       formatDate(parsedData);
@@ -492,6 +508,7 @@ export function useApiVKService () {
     updateRelationship,
     getHistoryCommentsByProfileId,
     getProfilesDBExtendedByEstOrCorrEst,
+    getFirstLineProfiles,
   };
 
 }

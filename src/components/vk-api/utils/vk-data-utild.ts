@@ -1,4 +1,4 @@
-import { TProfileDB, TProfileVK, TProfileCheckDB } from '../vk-lib/vk-models';
+import { TProfileDB, TProfileVK, TProfileCheckDB, TProfileDBExtended } from '../vk-lib/vk-models';
 
 export const countNonNullElementsInArray = (arr: (TProfileVK | TProfileDB | TProfileCheckDB | null | undefined)[]): number => {
   if (arr.length === 0) {return 0;}
@@ -28,4 +28,14 @@ export const getProfileIdsFromVkData = (profiles: (TProfileVK | null)[]): string
     },
   );
   return ids;
+};
+
+export const getDiffByCorrelationEstimationDesc = (a: TProfileDBExtended, b: TProfileDBExtended) => {
+  if (a.correlation_est > b.correlation_est) {
+    return -1;
+  }
+  if (a.correlation_est < b.correlation_est) {
+    return 1;
+  }
+  return 0;
 };

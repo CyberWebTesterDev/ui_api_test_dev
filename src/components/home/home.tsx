@@ -11,6 +11,7 @@ export const Home = () => {
        <a href={'/search-matches'}> Перейти на страницу поиска </a>
        <a href={'/profile-check'}> Перейти на страницу профайла </a>
        <a href={'/db-search'}> Перейти на страницу поиска БД </a>
+       <a href={'/game'}> Игра (тест) </a>
      </div>
   );
 };

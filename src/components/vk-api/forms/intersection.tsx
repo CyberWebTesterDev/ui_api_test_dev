@@ -22,5 +22,6 @@ export const Intersection = ({ profile }: TIntersection) => {
   );
 
   return isIntersected
-    ? <td key={`int-${profile?.id}`} className={'true-td'}>Да</td> : <td key={`int-${profile?.id}`} className={'false-td'}>Нет</td>;
+    ? <td key={`int-${profile?.id}`} className={'true-td'}>Да</td>
+    : <td key={`int-${profile?.id}`} className={'false-td'}>Нет</td>;
 };
