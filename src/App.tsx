@@ -10,6 +10,25 @@ import { PopUpContainer } from './components/pop-ups/pop-up-container';
 import { defaultServiceContext, ServiceContext } from './service-api/service-context';
 import { DbSearchContainer } from './components/vk-api/db-search/db-search-container';
 import { GameContainer } from './components/game/game-container';
+import { LOG_APP, trimStringArray } from './service-api';
+import { processText } from './data/process-data';
+
+function testFunc() {
+  /*
+Тестовый блок
+ */
+  const REG_EXP = /(^|\s{0,})[а-я]{1,}($|\s{0,})/gidu;
+  const REG_EXP_2 = /(^|\s{0,})[а-я]{1,}?[eo][г][o]($|\s{1,})/gidu;
+
+  const paramsToLog = {
+    testStr: 'книга лешего среднего теста путь парящего',
+    REG_EXP,
+    trimmedResult: trimStringArray('книга лешего среднего теста путь парящего'.match(REG_EXP)),
+    testRegExpResult: 'книга лешего среднего теста путь парящего'.match(REG_EXP_2),
+  };
+
+  LOG_APP('TEST_', { paramsToLog });
+}
 
 const AppComponent = () => {
   const [state, setStateContext] = React.useState(defaultContext);
@@ -17,8 +36,16 @@ const AppComponent = () => {
 
   React.useEffect(
     () => {
+      processText();
+      // testFunc(); init
+    }, [],
+  );
+
+  React.useEffect(
+    () => {
       const { profileCheckForm } = state;
-      console.log('AppComponent state VkApiContext change', {
+
+      LOG_APP('AppComponent state VkApiContext change', {
         profileCheckForm,
       });
     }, [state],
@@ -30,7 +57,7 @@ const AppComponent = () => {
     }), [setStateContext],
   );
 
-  const valueStateContext = React.useMemo(
+  const stateContext = React.useMemo(
     () => (
       {
         ...state,
@@ -38,7 +65,7 @@ const AppComponent = () => {
     ), [state],
   );
 
-  const valueServiceStateContext = React.useMemo(
+  const serviceStateContext = React.useMemo(
     () => (
       {
         ...serviceState,
@@ -49,9 +76,9 @@ const AppComponent = () => {
 
   return (
      <ApplicationContext.Provider value={applicationUpdateContext}>
-       <VkApiContext.Provider value={valueStateContext}>
-         <ServiceContext.Provider value={valueServiceStateContext}>
-           <Loader/>
+       <VkApiContext.Provider value={stateContext}>
+         <ServiceContext.Provider value={serviceStateContext}>
+          <Loader />
            <PopUpContainer/>
            <Home />
            <Routes>
