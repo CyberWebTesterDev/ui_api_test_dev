@@ -33,6 +33,7 @@ function testFunc() {
 const AppComponent = () => {
   const [state, setStateContext] = React.useState(defaultContext);
   const [serviceState, setServiceState] = React.useState(defaultServiceContext);
+  const { profileCheckForm } = state;
 
   React.useEffect(
     () => {
@@ -43,12 +44,11 @@ const AppComponent = () => {
 
   React.useEffect(
     () => {
-      const { profileCheckForm } = state;
-
       LOG_APP('AppComponent state VkApiContext change', {
         profileCheckForm,
       });
-    }, [state],
+      /* eslint-disable react-hooks/exhaustive-deps */
+    }, [profileCheckForm],
   );
 
   const applicationUpdateContext = React.useMemo(
@@ -57,13 +57,7 @@ const AppComponent = () => {
     }), [setStateContext],
   );
 
-  const stateContext = React.useMemo(
-    () => (
-      {
-        ...state,
-      }
-    ), [state],
-  );
+  const stateContext = state;
 
   const serviceStateContext = React.useMemo(
     () => (
@@ -94,4 +88,4 @@ const AppComponent = () => {
   );
 };
 
-export const App = React.memo(AppComponent);
+export const App = AppComponent;
