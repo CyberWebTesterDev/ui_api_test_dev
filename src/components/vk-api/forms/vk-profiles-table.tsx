@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { VK_NAMES_BY_KEY_MAP, TProfileVK } from '../vk-lib/vk-models';
 import './table.css';
-import { countNonNullElementsInArray } from '../utils/vk-data-utild';
+import { countNonNullElementsInArray } from '../utils/data-utils';
 import { Intersection } from './intersection';
+import { BaseLinkProfile } from './components/base-link';
 
 type TVkProfilesTable = {
   profilesFound: (TProfileVK | null)[] | undefined;
@@ -13,83 +13,72 @@ export const VkProfilesTable = ({ profilesFound }: TVkProfilesTable) => {
   const [selectedTdId, setSelectedTdId] = React.useState('');
 
   const handleSelectedTd = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const event = e.target as HTMLAnchorElement;
-    setSelectedTdId(event.id);
+    setSelectedTdId(e.currentTarget.id);
   };
 
-  const getClassName = (id: string) => {
-    if (selectedTdId === id) {
-      return 'selected-tr';
-    }
-    return '';
+  const getClassNameById = (id: string) => {
+    return selectedTdId === id ? 'selected-tr' : '';
   };
 
-  if (profilesFound?.length === 0 || !profilesFound) {
+  if (!profilesFound || profilesFound.length === 0) {
     return null;
   }
 
-  const tableHead = Object.keys(VK_NAMES_BY_KEY_MAP).map(
-    (key, idx) => {
-      return (
-         <th key={key + '_' + idx}>{VK_NAMES_BY_KEY_MAP[key as keyof typeof VK_NAMES_BY_KEY_MAP]}</th>
-      );
-    },
-  );
+  const tableHead = [
+    ...Object.keys(VK_NAMES_BY_KEY_MAP).map((key) => (
+       <th key={key}>
+         {VK_NAMES_BY_KEY_MAP[key as keyof typeof VK_NAMES_BY_KEY_MAP]}
+       </th>
+    )),
+    <th key="th_checked">Уже проверен?</th>,
+  ];
 
   tableHead.push(<th key={'th_checked'}>Уже проверен?</th>);
 
-  const tableBody = profilesFound.map(
-    (profile, idx) => {
-
-      return profile && (
+  const tableBody = profilesFound
+    .filter((profile): profile is TProfileVK => profile !== null)
+    .map((profile, idx) => (
          <tr
             key={`tr-${idx}-${profile.id}`}
-            id={`${profile?.id}`}
-            className={getClassName(profile.id.toString())}
+            id={`${profile.id}`}
+            className={getClassNameById(String(profile.id))}
          >
            <td key={`td-${idx}-${profile.id}`}>
              {profile?.id}
-             <a
-                key={`a-${idx}-${profile.id}`}
-                href={`https://vk.com/id${profile.id}`}
-                target={'_blank'}
-                className={'id-link'}
-                type={'button'}
-                id={`${profile?.id}`}
-                onClick={(e) => handleSelectedTd(e)}
-             >
-               Посмотреть в вк
-             </a>
-             <a
-                key={`a-${idx + 1}-${profile.id}`}
-                href={`http://192.168.1.236:3000/profile-check/${profile.id}`}
-                target={'_blank'}
-                className={'id-link'}
-                type={'button'}
-                id={`${profile?.id}`}
-                onClick={(e) => handleSelectedTd(e)}
-             >
-               Работать с профайлом
-             </a>
+             <BaseLinkProfile
+                index={String(idx)}
+                profileId={String(profile.id)}
+                handleSelectedTd={handleSelectedTd}
+                textContent='Посмотреть в вк'
+                isVK
+             />
+             <BaseLinkProfile
+                index={String(idx + 1)}
+                profileId={String(profile.id)}
+                handleSelectedTd={handleSelectedTd}
+                textContent='Работать с профайлом'
+             />
            </td>
-           <td key={`td-${idx + 2}-${profile.id}`}>{profile?.first_name}</td>
-           <td key={`td-${idx + 3}-${profile.id}`}>{profile?.last_name}</td>
-           <td key={`td-${idx + 4}-${profile.id}`}>{profile?.bdate}</td>
+           <td>{profile?.first_name}</td>
+           <td>{profile?.last_name}</td>
+           <td>{profile?.bdate}</td>
            <Intersection profile={profile} />
          </tr>
-      );
-    },
-  );
+    ),
+    );
+
   const countMatches = countNonNullElementsInArray(profilesFound);
   const hasMatches = countMatches > 0;
 
   return (
      <table className={'table-vk-matches'}>
        <caption style={{ marginBottom: '10px' }}>
-         {hasMatches ? 'Найдено ' + countMatches + ' подходящих' : 'Подходящих не' + ' найдено' }
+         {hasMatches
+           ? `Найдено ${countMatches} подходящих`
+           : 'Подходящих не найдено'}
        </caption>
        <thead>
-         <tr key={'table-head-row'}>
+         <tr>
           {tableHead}
          </tr>
        </thead>
