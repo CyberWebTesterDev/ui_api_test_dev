@@ -1,27 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { TProfileVK } from '../vk-lib/vk-models';
 import { useVkApiContext } from '../vk-api-context';
 
-type TIntersection = {
+type TIntersectionProps = {
   profile: TProfileVK | null;
-}
+};
 
-export const Intersection = ({ profile }: TIntersection) => {
+export const Intersection: React.FC<TIntersectionProps> = ({ profile }) => {
   const { profilesIntersections } = useVkApiContext();
-  const [isIntersected, setIsIntersected] = React.useState<boolean | undefined>(undefined);
-  React.useEffect(
-    () => {
-      if (profilesIntersections) {
-        const intersection = profilesIntersections?.find(int => int?.vk_id === profile?.id.toString());
-        const hasIntersection = intersection && intersection.vk_id === profile?.id.toString();
-        setIsIntersected(hasIntersection);
-      }
-    },
-    [profilesIntersections],
-  );
 
-  return isIntersected
-    ? <td key={`int-${profile?.id}`} className={'true-td'}>Да</td>
-    : <td key={`int-${profile?.id}`} className={'false-td'}>Нет</td>;
+  if (!profile) {
+    return <td className="false-td">Нет</td>;
+  }
+
+  const isIntersected =
+     !!profilesIntersections?.some(int => int?.vk_id === String(profile.id));
+
+  return (
+     <td className={isIntersected ? 'true-td' : 'false-td'}>
+       {isIntersected ? 'Да' : 'Нет'}
+     </td>
+  );
 };
