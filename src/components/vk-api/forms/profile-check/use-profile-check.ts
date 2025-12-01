@@ -1,62 +1,81 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { useApplicationContext } from '../../../application-container/app-context';
-import { useVkApiContext } from '../../vk-api-context';
 import { useMatch } from 'react-router-dom';
 import { LOG_APP, useApiVKService } from '../../../../service-api';
 
 export function useProfileCheck() {
-  const [id, setId] = React.useState<string>('');
-  const { getProfileDBExtendedInfoById, getProfileInfoById, getHistoryCommentsByProfileId } = useApiVKService();
+  const {
+    getProfileDBExtendedInfoById,
+    getProfileInfoById,
+    getHistoryCommentsByProfileId,
+  } = useApiVKService();
+
   const { updateStateContext } = useApplicationContext();
-  const context = useVkApiContext();
   const match = useMatch('profile-check/:id');
 
-  const getAllData = async () => {
-    const dataVk = await getProfileInfoById(id);
-    const dataDb = await getProfileDBExtendedInfoById(id);
-    const historyComments = await getHistoryCommentsByProfileId(id);
+  // id берём прямо из маршрута
+  const id = match?.params.id ?? '';
 
-    return {
-      dataVk,
-      dataDb,
-      historyComments,
-    };
-  };
+  React.useEffect(() => {
+    if (!id) {
+      return null;
+    } // если id нет — ничего не делаем
 
-  const updateIdSearchParameter = (id: string) => {
-    LOG_APP('useProfileCheck updateIdSearchParameter id: ', id);
-    setId(id);
-  };
+    LOG_APP('useProfileCheck start for id', { id });
 
-  React.useEffect(
-    () => {
-      if (match?.params.id) {
-        updateIdSearchParameter(match.params.id);
-      }
-    }, [],
-  );
+    let cancelled = false;
 
-  React.useEffect(
-    () => {
-      if (id) {
-        getAllData().then(
-          (data) => {
-            LOG_APP('useProfileCheck getAllData', {
-              data,
-            });
-            updateStateContext({
-              ...context,
-              profileCheckForm: {
-                profileInDb: data?.dataDb,
-                profileVKData: data.dataVk,
-                idSearchParameter: id,
-                historyComments: data.historyComments,
-              },
-            });
+    const run = async () => {
+      try {
+        // Параллельные запросы
+        const [dataVk, dataDb, historyComments] = await Promise.all([
+          getProfileInfoById(id),
+          getProfileDBExtendedInfoById(id),
+          getHistoryCommentsByProfileId(id),
+        ]);
+
+        if (cancelled) {
+          return;
+        }
+
+        LOG_APP('useProfileCheck getAllData', {
+          id,
+          dataVk,
+          dataDb,
+          historyComments,
+        });
+
+        updateStateContext(prev => ({
+          ...prev,
+          profileCheckForm: {
+            ...prev.profileCheckForm,
+            profileInDb: dataDb,
+            profileVKData: dataVk,
+            idSearchParameter: id,
+            historyComments,
           },
-        );
+        }));
       }
-    }, [id],
-  );
+      catch (error) {
+        if (cancelled) {
+          return;
+        }
+
+        LOG_APP('useProfileCheck error', { id, error });
+      }
+    };
+
+    run();
+
+    // cleanup для эффекта
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    id,
+    getProfileInfoById,
+    getProfileDBExtendedInfoById,
+    getHistoryCommentsByProfileId,
+    updateStateContext,
+  ]);
 }
