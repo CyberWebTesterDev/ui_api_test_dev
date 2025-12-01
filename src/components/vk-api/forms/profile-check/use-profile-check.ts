@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { useApplicationContext } from '../../../application-container/app-context';
 import { useVkApiContext } from '../../vk-api-context';
-import { useApiVKService } from '../../../../service-api/service-api';
 import { useMatch } from 'react-router-dom';
+import { LOG_APP, useApiVKService } from '../../../../service-api';
 
 export function useProfileCheck() {
   const [id, setId] = React.useState<string>('');
@@ -16,6 +16,7 @@ export function useProfileCheck() {
     const dataVk = await getProfileInfoById(id);
     const dataDb = await getProfileDBExtendedInfoById(id);
     const historyComments = await getHistoryCommentsByProfileId(id);
+
     return {
       dataVk,
       dataDb,
@@ -24,7 +25,7 @@ export function useProfileCheck() {
   };
 
   const updateIdSearchParameter = (id: string) => {
-    console.log('useProfileCheck updateIdSearchParameter id: ', id);
+    LOG_APP('useProfileCheck updateIdSearchParameter id: ', id);
     setId(id);
   };
 
@@ -41,7 +42,7 @@ export function useProfileCheck() {
       if (id) {
         getAllData().then(
           (data) => {
-            console.log('useProfileCheck getAllData', {
+            LOG_APP('useProfileCheck getAllData', {
               data,
             });
             updateStateContext({
