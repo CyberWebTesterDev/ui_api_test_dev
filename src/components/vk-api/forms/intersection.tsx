@@ -9,12 +9,14 @@ type TIntersectionProps = {
 export const Intersection: React.FC<TIntersectionProps> = ({ profile }) => {
   const { profilesIntersections } = useVkApiContext();
 
+  const isIntersected = React.useMemo(
+    () => !!profilesIntersections?.some(int => int?.vk_id === String(profile.id)),
+    [profilesIntersections, profile.id],
+  );
+
   if (!profile) {
     return <td className="false-td">Нет</td>;
   }
-
-  const isIntersected =
-     !!profilesIntersections?.some(int => int?.vk_id === String(profile.id));
 
   return (
      <td className={isIntersected ? 'true-td' : 'false-td'}>
